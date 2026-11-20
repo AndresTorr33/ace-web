@@ -1,0 +1,55 @@
+---
+import '@fontsource/outfit/800.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/700.css';
+import '../styles/global.css';
+// Solo se precargan las dos fuentes del primer render (CLAUDE.md).
+import outfit800 from '@fontsource/outfit/files/outfit-latin-800-normal.woff2?url';
+import dmSans400 from '@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2?url';
+
+import Header, { type PageKey } from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import type { Link } from '../data/types';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: PageKey;
+  headerCta: Link & { short?: string };
+  whatsappMessage: string;
+}
+
+const { title, description, current, headerCta, whatsappMessage } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="es-PE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={outfit800} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={dmSans400} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#142E4A" />
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only z-50 rounded-lg bg-ace-blue px-4 py-3 font-bold text-white focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+    >
+      Saltar al contenido
+    </a>
+    <Header current={current} cta={headerCta} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat message={whatsappMessage} />
+  </body>
+</html>

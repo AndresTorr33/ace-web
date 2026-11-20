@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* Tokens de marca (Manual de Marca ACE, sección 04) */
+@theme {
+  --color-ace-blue: #142e4a;
+  --color-ace-red: #ba2c27;
+  --color-ace-teal: #2f6b8a;
+  --color-ace-mist: #f2f5f8;
+  --color-ace-ink: #1d201a;
+  /* Grises de apoyo tomados de las maquetas */
+  --color-ace-line: #dde4ec;
+  --color-ace-border: #9aa9ba;
+
+  --font-display: "Outfit", Arial, sans-serif;
+  --font-sans: "DM Sans", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* El header fijo no tapa las anclas */
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    @apply bg-white font-sans text-ace-ink antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display font-extrabold text-balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ace-teal);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-ace {
+    @apply mx-auto w-full max-w-[1440px] px-5 lg:px-20;
+  }
+  .eyebrow {
+    @apply font-sans text-xs font-bold tracking-[3px] uppercase lg:text-sm lg:tracking-[4px];
+  }
+  .btn {
+    @apply inline-flex min-h-[3.375rem] items-center justify-center rounded-xl px-7 text-[17px] font-bold no-underline transition-colors;
+  }
+  .btn-primary {
+    @apply bg-ace-red text-white hover:bg-[#9f241f];
+  }
+  .btn-outline-light {
+    @apply border-2 border-white text-white hover:bg-white hover:text-ace-blue;
+  }
+  .btn-outline-dark {
+    @apply border-2 border-ace-blue text-ace-blue hover:bg-ace-blue hover:text-white;
+  }
+  .btn-light {
+    @apply bg-white text-ace-blue hover:bg-ace-mist;
+  }
+}

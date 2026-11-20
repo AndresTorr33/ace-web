@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import logoBlanco from '../assets/marca/ace-logo-blanco.svg';
+import { site, whatsappUrl } from '../data/site';
+
+const ext = { target: '_blank', rel: 'noopener noreferrer' };
+const redes = [
+  { label: site.social.instagram.handle, href: site.social.instagram.url },
+  { label: 'TikTok', href: site.social.tiktok },
+  { label: 'Facebook', href: site.social.facebook },
+  { label: 'LinkedIn', href: site.social.linkedin },
+].filter((r) => r.href); // las redes sin URL no se muestran
+
+const linkClass = 'underline-offset-4 hover:underline';
+const { street, district, city } = site.address;
+---
+
+<footer class="bg-ace-blue text-white">
+  <div
+    class="container-ace grid gap-9 pt-10 pb-28 text-[15px] leading-[1.8] sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10 lg:py-16"
+  >
+    <div class="flex flex-col gap-3.5">
+      <a href="/" aria-label="ACE Perú, ir al inicio" class="self-start">
+        <Image src={logoBlanco} alt="" class="h-auto w-[90px] lg:w-[110px]" />
+      </a>
+      <p class="max-w-xs leading-normal">{site.tagline}</p>
+    </div>
+
+    <div>
+      <h2 class="mb-2 font-sans text-[15px] font-bold">Programas</h2>
+      <ul>
+        <li><a class={linkClass} href="/">Work &amp; Travel</a></li>
+        <li><a class={linkClass} href="/trainee-internship">Trainee &amp; Internship</a></li>
+        <li><a class={linkClass} href="/charlas">Charlas informativas</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-2 font-sans text-[15px] font-bold">Contacto</h2>
+      <ul>
+        <li>
+          <a class={linkClass} href={whatsappUrl('Hola ACE, quiero información.')} {...ext}>
+            WhatsApp {site.whatsapp.display}
+          </a>
+        </li>
+        <li><a class={linkClass} href={`mailto:${site.email}`}>{site.email}</a></li>
+        {redes.map((r) => <li><a class={linkClass} href={r.href} {...ext}>{r.label}</a></li>)}
+        <li>
+          <address class="not-italic">{street}, {district}, {city}</address>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-2 font-sans text-[15px] font-bold">Legal</h2>
+      <ul>
+        {
+          site.libroReclamacionesUrl && (
+            <li><a class={linkClass} href={site.libroReclamacionesUrl} {...ext}>Libro de Reclamaciones</a></li>
+          )
+        }
+        <li><a class={linkClass} href="/privacidad">Política de privacidad</a></li>
+        <li>{site.legalName}</li>
+        <li>RUC {site.ruc}</li>
+      </ul>
+    </div>
+  </div>
+</footer>
